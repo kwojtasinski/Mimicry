@@ -1,0 +1,62 @@
+description: Dimension table storing customer reviews and ratings.
+fields:
+- description: Unique identifier for each feedback entry.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: feedback_id
+- description: Foreign key referencing the user who submitted the feedback.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: user_id_fk
+- description: Foreign key referencing the product being reviewed.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: product_id_fk
+- description: Date and time when the feedback was submitted.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2023
+  mimesis_field_name: datetime.datetime
+  name: submission_datetime
+- description: Numeric rating score given by the customer (1-5).
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 5
+    start: 1
+  mimesis_field_name: numeric.integer_number
+  name: rating_score
+- description: Title of the customer review.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.title
+  name: review_title
+- description: Detailed text of the customer review.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.answer
+  name: review_text
+- description: Indicates whether the review has been approved by support.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: development.boolean
+  name: is_approved
+- description: Sentiment classification of the review (Positive, Neutral, Negative).
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Positive
+    - Neutral
+    - Negative
+  mimesis_field_name: choice.choice
+  name: sentiment
+- description: Response from customer support to the review.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.sentence
+  name: response_from_support
+locale: en
+name: DimCustomerFeedback

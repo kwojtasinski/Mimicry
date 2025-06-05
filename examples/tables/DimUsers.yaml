@@ -1,0 +1,68 @@
+description: Dimension table storing user profile information.
+fields:
+- description: Unique identifier for the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: user_id
+- description: Unique username chosen by the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.username
+  name: username
+- description: User's email address.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.email
+  name: email
+- description: Full name of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.full_name
+  name: full_name
+- description: Gender of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.gender
+  name: gender
+- description: Date of birth of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2005
+    start: 1950
+  mimesis_field_name: datetime.date
+  name: birth_date
+- description: User's phone number.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.telephone
+  name: phone_number
+- description: ISO country code of the user's location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.country_code
+  name: country_code
+- description: City where the user resides.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.city
+  name: city
+- description: Date and time when the user registered.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2020
+  mimesis_field_name: datetime.datetime
+  name: registration_date
+- description: Preferred language of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.language
+  name: preferred_language
+- description: Last login IPv4 address of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.ip_v4
+  name: last_login_ip
+locale: en
+name: DimUsers

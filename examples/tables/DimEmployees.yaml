@@ -1,0 +1,60 @@
+description: Dimension table for employee information.
+fields:
+- description: Unique identifier for the employee.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    mask: EMP-#####
+  mimesis_field_name: person.identifier
+  name: employee_id
+- description: National identification number for the employee.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.identifier
+  name: national_id
+- description: Full name of the employee.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.full_name
+  name: full_name
+- description: Job title or position held by the employee.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.occupation
+  name: job_title
+- description: Work email address of the employee.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: person.email
+  name: email
+- description: Date when the employee was hired.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2010
+  mimesis_field_name: datetime.date
+  name: hire_date
+- description: Annual salary of the employee in USD.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 150000
+    minimum: 30000
+  mimesis_field_name: finance.price
+  name: salary
+- description: Employee ID of the manager (foreign key).
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    mask: EMP-#####
+  mimesis_field_name: person.identifier
+  name: manager_id_fk
+- description: City where the employee's office is located.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.city
+  name: office_location
+- description: Indicates if the employee is currently active.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: development.boolean
+  name: is_active
+locale: en
+name: DimEmployees

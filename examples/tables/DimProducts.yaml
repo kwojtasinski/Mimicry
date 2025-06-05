@@ -1,0 +1,63 @@
+description: Dimension table for product catalog information.
+fields:
+- description: Unique identifier for the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: food.fruit
+  name: product_id
+- description: Stock Keeping Unit (SKU) code for the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: code.ean
+  name: product_sku
+- description: Name of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.word
+  name: product_name
+- description: Category to which the product belongs.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.word
+  name: category
+- description: Brand or manufacturer of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: finance.company
+  name: brand
+- description: Unit price of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 500.0
+    minimum: 5.0
+  mimesis_field_name: finance.price
+  name: unit_price
+- description: ISO currency code for the unit price.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: finance.currency_iso_code
+  name: currency_code
+- description: Short description of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.sentence
+  name: description
+- description: Supplier or vendor of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: finance.company
+  name: supplier
+- description: Date when the product was added to the catalog.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2021
+  mimesis_field_name: datetime.date
+  name: date_added
+- description: Indicates if the product is currently available.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: development.boolean
+  name: is_available
+locale: en
+name: DimProducts

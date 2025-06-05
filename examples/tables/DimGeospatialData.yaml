@@ -1,0 +1,67 @@
+description: Dimension table for location-based information.
+fields:
+- description: Unique identifier for the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: location_id
+- description: Latitude coordinate of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.latitude
+  name: latitude
+- description: Longitude coordinate of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.longitude
+  name: longitude
+- description: Primary street address of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.street_name
+  name: address_line_1
+- description: City where the location is situated.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.city
+  name: city
+- description: State or province of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.state
+  name: state_province
+- description: Postal or ZIP code of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.postal_code
+  name: postal_code
+- description: Country where the location is found.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.country
+  name: country
+- description: Timezone of the location.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: datetime.timezone
+  name: timezone
+- description: Type of location (e.g., Store, Warehouse, Office).
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Store
+    - Warehouse
+    - Office
+    - Distribution Center
+    - Point of Interest
+  mimesis_field_name: choice.choice
+  name: location_type
+- description: Timestamp of the last update to the location data.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2023
+  mimesis_field_name: datetime.datetime
+  name: last_updated
+locale: en
+name: DimGeospatialData

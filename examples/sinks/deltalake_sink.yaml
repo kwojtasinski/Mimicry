@@ -1,0 +1,5 @@
+configuration:
+  type_of_sink: "delta_lake" 
+  path: "dim_employees.delta" # Path to the Delta Lake table
+  optimize: 10 # Optional: optimize every 10 batches for Delta Lake
+  vacuum: 20 # Optional: vacuum every 20 batches for Delta Lake

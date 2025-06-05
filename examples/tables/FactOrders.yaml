@@ -1,0 +1,76 @@
+description: Fact table storing transactional order data.
+fields:
+- description: Unique identifier for the order.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: order_id
+- description: Foreign key referencing the user who placed the order.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: user_id_fk
+- description: Foreign key referencing the product ordered.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: food.fruit
+  name: product_id_fk
+- description: Date and time when the order was placed.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2023
+  mimesis_field_name: datetime.datetime
+  name: order_datetime
+- description: Quantity of the product ordered.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 10
+    start: 1
+  mimesis_field_name: numeric.integer_number
+  name: quantity
+- description: Price per unit of the product at the time of order.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 500.0
+    minimum: 5.0
+  mimesis_field_name: finance.price
+  name: unit_price_at_order
+- description: Total amount for the order (quantity × unit price, minus discounts).
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 5000.0
+    minimum: 5.0
+  mimesis_field_name: finance.price
+  name: total_amount
+- description: Discount percentage applied to the order.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 0.5
+    precision: 2
+    start: 0.0
+  mimesis_field_name: numeric.float_number
+  name: discount_applied_percentage
+- description: Full shipping address for the order.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.address
+  name: shipping_address_full
+- description: Current status of the order.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Pending
+    - Shipped
+    - Delivered
+    - Cancelled
+    - Returned
+  mimesis_field_name: choice.choice
+  name: order_status
+- description: Credit card network used for payment.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: payment.credit_card_network
+  name: credit_card_network
+locale: en
+name: FactOrders

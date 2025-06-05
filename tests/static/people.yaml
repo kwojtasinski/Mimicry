@@ -1,0 +1,21 @@
+name: people
+description: A table containing information about people.
+fields:
+  - name: id
+    description: Identifier for each person.
+    mimesis_field_name: 'integer_number'
+    mimesis_field_kwargs:
+      start: 1
+      end: 1000
+  - name: first_name
+    description: First name of the person
+    mimesis_field_name: 'person.first_name'
+  - name: last_name
+    description: Last name of the person
+    mimesis_field_name: 'person.last_name'
+  - name: birth_date
+    description: Birth date of the person
+    mimesis_field_name: 'datetime.datetime'
+    mimesis_field_kwargs:
+      start: 1950
+      end: 1980

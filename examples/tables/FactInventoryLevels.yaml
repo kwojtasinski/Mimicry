@@ -1,0 +1,61 @@
+description: Fact table for tracking product inventory levels.
+fields:
+- description: Unique identifier for each inventory log entry.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: inventory_log_id
+- description: Foreign key referencing the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: food.fruit
+  name: product_id_fk
+- description: Identifier for the warehouse where the inventory is stored.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.zip_code
+  name: warehouse_id
+- description: Date and time when the inventory snapshot was taken.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2024
+  mimesis_field_name: datetime.datetime
+  name: snapshot_datetime
+- description: Quantity of product currently on hand in the warehouse.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 1000
+    start: 0
+  mimesis_field_name: numeric.integer_number
+  name: quantity_on_hand
+- description: Quantity of product currently on order but not yet received.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 500
+    start: 0
+  mimesis_field_name: numeric.integer_number
+  name: quantity_on_order
+- description: Minimum quantity at which the product should be reordered.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 100
+    start: 10
+  mimesis_field_name: numeric.integer_number
+  name: reorder_level
+- description: Date when the product was last stocked.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2023
+  mimesis_field_name: datetime.date
+  name: last_stocked_date
+- description: Cost per item of the product.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 300.0
+    minimum: 1.0
+  mimesis_field_name: finance.price
+  name: item_cost
+locale: en
+name: FactInventoryLevels

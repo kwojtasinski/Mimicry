@@ -1,0 +1,71 @@
+description: Table logging website traffic and user interactions.
+fields:
+- description: Unique identifier for each log entry.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: log_id
+- description: Unique session token for the user's visit.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    entropy: 32
+  mimesis_field_name: cryptographic.token_hex
+  name: session_id
+- description: Foreign key referencing the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: cryptographic.uuid
+  name: user_id_fk
+- description: Timestamp of the interaction.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2024
+  mimesis_field_name: datetime.datetime
+  name: timestamp
+- description: IP address of the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.ip_v4
+  name: ip_address
+- description: User agent string of the browser or device.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.user_agent
+  name: user_agent
+- description: URL of the page visited.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.uri
+  name: page_url
+- description: Referrer URL from which the user arrived.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.uri
+  name: referrer_url
+- description: HTTP method used for the request (e.g., GET, POST).
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.http_method
+  name: http_method
+- description: HTTP status code returned in the response.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: internet.http_status_code
+  name: response_status_code
+- description: Country of the user based on IP address.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: address.country
+  name: country
+- description: Type of device used by the user.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Desktop
+    - Mobile
+    - Tablet
+  mimesis_field_name: choice.choice
+  name: device_type
+locale: en
+name: LogWebTraffic

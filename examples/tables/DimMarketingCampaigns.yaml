@@ -1,0 +1,68 @@
+description: Dimension table for marketing campaign details.
+fields:
+- description: Unique identifier for the marketing campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.word
+  name: campaign_id
+- description: Name of the marketing campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.title
+  name: campaign_name
+- description: Date when the campaign starts.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2024
+    start: 2023
+  mimesis_field_name: datetime.date
+  name: start_date
+- description: Date when the campaign ends.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    end: 2025
+    start: 2024
+  mimesis_field_name: datetime.date
+  name: end_date
+- description: Budget allocated for the campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    maximum: 100000
+    minimum: 1000
+  mimesis_field_name: finance.price
+  name: budget
+- description: Marketing channel used for the campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Social Media
+    - Email
+    - PPC
+    - SEO
+    - Content Marketing
+    - TV
+  mimesis_field_name: choice.choice
+  name: channel
+- description: Main objective or goal of the campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+  mimesis_field_name: text.sentence
+  name: campaign_goal
+- description: Current status of the campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    items:
+    - Planned
+    - Active
+    - Completed
+    - Paused
+  mimesis_field_name: choice.choice
+  name: status
+- description: Foreign key referencing the employee who owns the campaign.
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    mask: EMP-#####
+  mimesis_field_name: person.identifier
+  name: owner_employee_id_fk
+locale: en
+name: DimMarketingCampaigns
