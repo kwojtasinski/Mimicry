@@ -37,7 +37,7 @@ uv run mimicry --help
 ```
 
 ```bash
-docker run -it --port 8000:8000 kwojtasinski/mimicry:latest mimicry --help
+docker run -it --port 8000:8000 k0wojtasinski/mimicry:latest mimicry --help
 ```
 
 
