@@ -3,7 +3,7 @@ from pathlib import Path
 
 import yaml
 
-from mimicry.models import SinkConfiguration, TableConfiguration, FieldConfiguration
+from mimicry.models import SinkConfiguration, TableConfiguration
 
 logger = logging.getLogger(__name__)
 
