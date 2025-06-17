@@ -1,7 +1,7 @@
 FROM python:3.12-slim
 LABEL maintainer="Kacper Wojtasinski <k0wojtasinski@gmail.com>"
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.7 /uv /uvx /bin/
 
 # Change the working directory to the `app` directory
 WORKDIR /app

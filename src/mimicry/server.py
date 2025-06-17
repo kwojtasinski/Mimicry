@@ -61,6 +61,7 @@ def build_table_model(
 
     result_type = pydantic.create_model(
         table.name,
+        __doc__=table.description,
         **{
             field.name: (
                 type(sample_data[field.name]),
@@ -86,6 +87,7 @@ def build_api_route(
         APIRoute: The FastAPI route for the table.
     """
     result_type = build_table_model(table=table, strict=strict)
+
     route_path = f"/tables/{table.name}"
 
     def endpoint_callable(count: int):
@@ -140,9 +142,13 @@ def build_fastapi_app(
                 e,
             )
             continue
+
     if not routes:
         raise ValueError("No valid tables provided to build the FastAPI application.")
 
     app.routes.extend(routes)
 
     return app
+
+
+__all__ = ["build_fastapi_app"]

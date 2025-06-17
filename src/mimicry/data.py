@@ -4,10 +4,13 @@ import os
 import time
 from collections.abc import Callable
 
+from kafka import KafkaProducer as Producer
+
 import duckdb
 import polars as pl
 from deltalake import DeltaTable
 from mimesis import Fieldset, Locale
+from pyiceberg.catalog import load_catalog
 
 from mimicry.exceptions import (
     MimicryInvalidCountValueError,
@@ -16,6 +19,9 @@ from mimicry.exceptions import (
 from mimicry.models import (
     DeltaLakeSinkConfiguration,
     DuckDBSinkConfiguration,
+    IcebergSinkConfiguration,
+    KafkaSinkConfiguration,
+    PostgresSinkConfiguration,
     SinkConfiguration,
     TableConfiguration,
 )
@@ -146,16 +152,75 @@ def append_to_duckdb(config: DuckDBSinkConfiguration, data: pl.DataFrame) -> Non
         conn.append(config.table_name, data.to_pandas())
 
 
+def append_to_postgres(
+    config: PostgresSinkConfiguration, data: pl.DataFrame, batch_idx: int
+) -> None:
+    data.write_database(
+        connection=config.connection_string,
+        table_name=config.table_name,
+        if_table_exists="append",
+        engine="sqlalchemy",
+    )
+
+
+def append_to_iceberg(
+    config: IcebergSinkConfiguration, data: pl.DataFrame, batch_idx: int
+) -> None:
+    catalog = load_catalog(
+        "main",
+        **config.catalog_properties,
+    )
+    if not catalog.table_exists(config.table_name):
+        catalog.create_table(
+            identifier=config.table_name,
+            schema=data.to_arrow().schema,
+        )
+    table = catalog.load_table(config.table_name)
+    table.append(data.to_arrow())
+
+
+def append_to_kafka(
+    config: KafkaSinkConfiguration, data: pl.DataFrame, batch_idx: int
+) -> None:
+    producer = Producer(**config.producer_config)
+    topic = config.topic
+    items = data.write_ndjson()
+
+    for item in items.splitlines():
+        producer.send(topic, value=item.encode("utf-8"))
+
+    producer.flush()
+    producer.close()
+
+
 def append_to_sink(sink: SinkConfiguration, data: pl.DataFrame, batch_idx: int) -> None:
     match sink.configuration.type_of_sink:
         case "delta_lake":
             append_to_delta(config=sink.configuration, data=data, batch_idx=batch_idx)
         case "duckdb":
             append_to_duckdb(config=sink.configuration, data=data)
+        case "postgres":
+            append_to_postgres(
+                config=sink.configuration, data=data, batch_idx=batch_idx
+            )
+        case "iceberg":
+            append_to_iceberg(config=sink.configuration, data=data, batch_idx=batch_idx)
+        case "kafka":
+            append_to_kafka(config=sink.configuration, data=data, batch_idx=batch_idx)
         case _:
             raise ValueError(
                 f"Unsupported sink type: {sink.configuration.type_of_sink}",
             )
+    logger.info(
+        "Appended %d records to sink of type '%s' in batch %d.",
+        len(data),
+        sink.configuration.type_of_sink,
+        batch_idx,
+    )
+
+
+def is_stream_active(idx: int, num_of_batches: int) -> bool:
+    return idx <= num_of_batches if num_of_batches > 0 else True
 
 
 def stream_data(
@@ -167,8 +232,6 @@ def stream_data(
     strict: bool = False,
 ) -> None:
     idx = 1
-    stream_active = lambda idx: idx <= num_of_batches if num_of_batches > 0 else True
-
     logger.info(
         "Starting data streaming for table '%s' with %d records per batch, every %d seconds.",
         table.name,
@@ -178,7 +241,7 @@ def stream_data(
 
     logger.info("Table configuration: %s", table.model_dump_json(indent=4))
 
-    while stream_active(idx):
+    while is_stream_active(idx, num_of_batches):
         data = generate_data(table=table, count=count, strict=strict)
 
         if num_of_batches > 0:
@@ -199,6 +262,14 @@ def stream_data(
 
         append_to_sink(sink=sink, data=data, batch_idx=idx)
 
+        if num_of_batches == 1:
+            logger.info(
+                "Single batch completed. Exiting after appending %d records to sink of type '%s'.",
+                count,
+                sink.configuration.type_of_sink,
+            )
+            return
+
         logger.info(
             "Appended %d records to sink of type '%s' in batch %d. Waiting for %d seconds before next batch.",
             count,
@@ -210,3 +281,6 @@ def stream_data(
         time.sleep(interval)
 
         idx += 1
+
+
+__all__ = ["stream_data", "generate_data"]

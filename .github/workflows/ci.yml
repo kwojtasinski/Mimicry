@@ -1,0 +1,31 @@
+# GitHub Actions workflow for CI using uv (no Docker)
+name: CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Install uv
+        uses: astral-sh/setup-uv@v5
+        with:
+          # Install a specific version of uv.
+          version: "0.7.13"
+
+      - name: Sync dependencies (locked)
+        run: |
+          uv sync --locked --no-install-project
+
+      - name: Run check (ruff)
+        run: uv run ruff check .
+
+      - name: Run tests (pytest)
+        run: uv run pytest

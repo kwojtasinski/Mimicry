@@ -1,6 +1,6 @@
 [project]
 name = "mimicry"
-version = "0.1.0"
+version = "0.2.0"
 description = "Mimicry is a Python-based tool designed for generating and streaming synthetic data."
 readme = "README.md"
 authors = [
@@ -8,14 +8,19 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "connectorx>=0.4.3",
     "duckdb>=1.2.2",
     "fastapi>=0.115.12",
     "httpx>=0.28.1",
+    "kafka-python>=2.2.11",
     "mimesis>=18.0.0",
     "pandas>=2.2.3",
     "polars[deltalake,iceberg]>=1.29.0",
+    "psycopg2-binary>=2.9.10",
     "pydantic>=2.11.4",
+    "pytest-docker>=3.2.2",
     "pyyaml>=6.0.2",
+    "sqlalchemy>=2.0.41",
     "typer>=0.15.4",
     "uvicorn>=0.34.2",
 ]
@@ -29,6 +34,14 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "mkdocs-material>=9.6.14",
     "pytest>=8.3.5",
     "ruff>=0.11.9",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ssv"
+markers = [
+    "unit: unit tests",
+    "integration: tests using Docker Compose",
 ]
