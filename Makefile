@@ -4,5 +4,9 @@ fix:
 	uv run ruff check --fix .
 check:
 	uv run ruff check .
+unit-tests:
+	uv run pytest -m unit
+integration-tests:
+	uv run pytest -m integration
 test:
-	uv run pytest -ssv
+	uv run pytest
