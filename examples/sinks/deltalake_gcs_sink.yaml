@@ -1,0 +1,28 @@
+configuration:
+  type_of_sink: "delta_lake"
+  # GCS path format: gs://bucket-name/path/to/delta-table
+  path: "gs://bucket-name/delta-tables/employees"
+  partition_by: ["year", "month", "day"]
+  optimize: 10  # Optimize every 10 batches
+  vacuum: 20    # Vacuum every 20 batches
+
+# Required environment variables:
+# GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
+
+# Alternative authentication methods:
+# 1. Service Account Key (recommended for production):
+#    export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
+#
+# 2. Application Default Credentials (for development):
+#    gcloud auth application-default login
+#
+# 3. Workload Identity (for Kubernetes):
+#    No additional environment variables needed if configured properly
+#
+# Optional environment variables:
+# GOOGLE_CLOUD_PROJECT=your-project-id
+#
+# Example usage:
+# export GOOGLE_APPLICATION_CREDENTIALS=/path/to/my-service-account.json
+# export GOOGLE_CLOUD_PROJECT=my-project-id
+# mimicry generate --schema examples/tables/DimEmployees.yaml --sink examples/sinks/deltalake_gcs_sink.yaml --count 1000 --interval 2 --batches 10

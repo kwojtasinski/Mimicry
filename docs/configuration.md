@@ -55,7 +55,7 @@ fields:
   name: is_active
 ```
 
-Please refer to the [Mimesis documentation](https://mimesis.name/en/latest/) for a complete list of available fields and their parameters.
+Please refer to the [Mimesis documentation](https://mimesis.name) for a complete list of available fields and their parameters.
 
 **Fields in `TableConfiguration`:**
 
