@@ -1,6 +1,6 @@
 [project]
 name = "mimicry"
-version = "0.2.0"
+version = "0.2.1"
 description = "Mimicry is a Python-based tool designed for generating and streaming synthetic data."
 readme = "README.md"
 authors = [
