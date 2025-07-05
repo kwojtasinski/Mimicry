@@ -212,6 +212,7 @@ def append_to_sink(sink: SinkConfiguration, data: pl.DataFrame, batch_idx: int) 
                 f"Unsupported sink type: {sink.configuration.type_of_sink}",
             )
 
+
 def is_stream_active(idx: int, num_of_batches: int) -> bool:
     return idx <= num_of_batches if num_of_batches > 0 else True
 
