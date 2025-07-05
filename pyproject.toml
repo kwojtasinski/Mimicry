@@ -8,9 +8,11 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "boto3>=1.38.42",
     "connectorx>=0.4.3",
     "duckdb>=1.2.2",
     "fastapi>=0.115.12",
+    "google-cloud-storage>=3.1.1",
     "httpx>=0.28.1",
     "kafka-python>=2.2.11",
     "mimesis>=18.0.0",
@@ -34,7 +36,9 @@ build-backend = "hatchling.build"
 
 [dependency-groups]
 dev = [
+    "commitizen>=4.8.3",
     "mkdocs-material>=9.6.14",
+    "pre-commit>=4.2.0",
     "pytest>=8.3.5",
     "ruff>=0.11.9",
 ]
@@ -45,3 +49,12 @@ markers = [
     "unit: unit tests",
     "integration: tests using Docker Compose",
 ]
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+tag_format = "$version"
+version_scheme = "pep440"
+version_provider = "uv"
+update_changelog_on_bump = true
+major_version_zero = true
+changelog_file = "docs/CHANGELOG.md"
