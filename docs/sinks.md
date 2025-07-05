@@ -72,13 +72,6 @@ configuration:
   vacuum: 20
 ```
 
-**Required Environment Variables:**
-
-```bash
-# Authentication (choose one method
-export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service-account-key.json
-```
-
 **Authentication Methods:**
 
 1. **Service Account Key** (Recommended for Production):

@@ -211,12 +211,6 @@ def append_to_sink(sink: SinkConfiguration, data: pl.DataFrame, batch_idx: int) 
             raise ValueError(
                 f"Unsupported sink type: {sink.configuration.type_of_sink}",
             )
-    logger.info(
-        "Appended %d records to sink of type '%s' in batch %d.",
-        len(data),
-        sink.configuration.type_of_sink,
-        batch_idx,
-    )
 
 
 def is_stream_active(idx: int, num_of_batches: int) -> bool:

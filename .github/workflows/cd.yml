@@ -31,12 +31,25 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Get project version from uv
-        id: get_version
-        run: |
-          VERSION=$(uv version | awk '{print $2}')
-          echo "version=$VERSION" >> $GITHUB_OUTPUT
-
+      - name: Bump version and update changelog
+        id: cz_bump
+        uses: commitizen-tools/commitizen-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          changelog_increment_filename: CHANGELOG.md
+      
+      - name: Create Release
+        uses: actions/create-release@v1
+        id: create_release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.cz.outputs.version }}
+          release_name: Release ${{ steps.cz.outputs.version }}
+          body: |
+            ${{ steps.cz_bump.outputs.changelog }}
+          draft: false
+          prerelease: false
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -44,5 +57,5 @@ jobs:
           context: .
           push: true
           tags: |
-            k0wojtasinski/mimicry:${{ steps.get_version.outputs.version }}
+            k0wojtasinski/mimicry:${{ steps.cz.outputs.version }}
             k0wojtasinski/mimicry:latest
