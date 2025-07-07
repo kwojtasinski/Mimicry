@@ -10,3 +10,5 @@ integration-tests:
 	uv run pytest -m integration
 test:
 	uv run pytest
+docs-serve:
+	uv run mkdocs serve

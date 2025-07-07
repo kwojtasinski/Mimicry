@@ -29,7 +29,7 @@ nav:
   - Configuration: configuration.md
   - Supported Sinks: sinks.md
   - CLI: cli.md
-  - Development: development.md
+  - Changelog: CHANGELOG.md
 
 markdown_extensions:
   - admonition

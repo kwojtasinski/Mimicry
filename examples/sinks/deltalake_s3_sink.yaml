@@ -1,0 +1,22 @@
+configuration:
+  type_of_sink: "delta_lake"
+  path: "s3://bucket_name/delta-tables/employees"
+  partition_by: ["year", "month", "day"]
+  optimize: 10  # Optimize every 10 batches
+  vacuum: 20    # Vacuum every 20 batches
+
+# Required environment variables:
+# AWS_ACCESS_KEY_ID=your_access_key
+# AWS_SECRET_ACCESS_KEY=your_secret_key
+# AWS_REGION=us-east-1
+#
+# Optional environment variables:
+# AWS_SESSION_TOKEN=your_session_token  # For temporary credentials
+# AWS_ENDPOINT_URL=https://your-s3-compatible-endpoint  # For S3-compatible storage
+#
+# Example usage:
+# export AWS_ACCESS_KEY_ID=AKIAIOSFODNN7EXAMPLE
+# export AWS_SECRET_ACCESS_KEY=wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
+# export AWS_REGION=us-east-1
+# export S3_BUCKET_NAME=my-data-lake-bucket
+# mimicry generate --schema examples/tables/DimEmployees.yaml --sink examples/sinks/deltalake_s3_sink.yaml --count 1000 --interval 2 --batches 10

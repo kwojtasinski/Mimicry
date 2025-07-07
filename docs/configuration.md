@@ -55,22 +55,22 @@ fields:
   name: is_active
 ```
 
-Please refer to the [Mimesis documentation](https://mimesis.name/en/latest/) for a complete list of available fields and their parameters.
+Please refer to the [Mimesis documentation](https://mimesis.name) for a complete list of available fields and their parameters.
 
 **Fields in `TableConfiguration`:**
 
-*   `name` (str): The name of the table.
-*   `description` (str): A description of the table.
-*   `locale` (str, optional): The Mimesis locale to use for data generation (e.g., "en", "de", "ja"). Defaults to "en".
-*   `fields` (list): A list of `FieldConfiguration` objects.
+* `name` (str): The name of the table.
+* `description` (str): A description of the table.
+* `locale` (str, optional): The Mimesis locale to use for data generation (e.g., "en", "de", "ja"). Defaults to "en".
+* `fields` (list): A list of `FieldConfiguration` objects.
 
 **Fields in `FieldConfiguration`:**
 
-*   `name` (str): The name of the field (column name).
-*   `description` (str): A description of the field.
-*   `mimesis_field_name` (str): The Mimesis provider and method to use (e.g., "person.full_name", "address.city", "numeric.float_number").
-*   `mimesis_field_args` (list, optional): A list of positional arguments to pass to the Mimesis method.
-*   `mimesis_field_kwargs` (dict, optional): A dictionary of keyword arguments to pass to the Mimesis method.
+* `name` (str): The name of the field (column name).
+* `description` (str): A description of the field.
+* `mimesis_field_name` (str): The Mimesis provider and method to use (e.g., "person.full_name", "address.city", "numeric.float_number").
+* `mimesis_field_args` (list, optional): A list of positional arguments to pass to the Mimesis method.
+* `mimesis_field_kwargs` (dict, optional): A dictionary of keyword arguments to pass to the Mimesis method.
 
 ## Sink Configuration
 
@@ -90,3 +90,21 @@ configuration:
 ```
 
 The top-level key is `configuration`, which then contains the specific sink type and its parameters. Refer to the [Sinks](./sinks.md) documentation for details on each sink type.
+
+## Support for configurations stored in the object storage
+
+Mimicry supports configurations stored in object storage systems like Google Cloud Storage (GCS) and Amazon S3. You can specify the path to the configuration file in the object storage, and Mimicry will handle loading it.
+
+### Example for GCS
+
+```bash
+uv run mimicry serve --schema gs://bucket/schemas/my_table_schema.yaml
+uv run mimicry generate --schema gs://bucket/schemas/traffic.yaml --sink gs://bucket/sinks/deltalake_sink.yaml -i 1 -c 10000 -b 15
+```
+
+### Example for S3
+
+```bash
+uv run mimicry serve --schema s3://bucket/schemas/my_table_schema.yaml
+uv run mimicry generate --schema s3://bucket/schemas/traffic.yaml --sink s3://bucket/sinks/deltalake_sink.yaml -i 1 -c 10000 -b 15
+```

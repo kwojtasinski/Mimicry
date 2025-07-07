@@ -1,5 +1,3 @@
-from pathlib import Path
-
 import uvicorn
 
 import typer
@@ -17,10 +15,12 @@ app = typer.Typer(
 
 @app.command(no_args_is_help=True)
 def generate(
-    sink_path: Path = typer.Option(..., "-s", help="Sink configuration path"),
-    schema_path: Path = typer.Option(..., "-p", help="Schema configuration path"),
+    sink_path: str = typer.Option(..., "-s", "--sink", help="Sink configuration path"),
+    schema_path: str = typer.Option(
+        ..., "-p", "--schema", help="Schema configuration path"
+    ),
     interval: int = typer.Option(
-        ..., "-i", help="Interval in seconds between generating batches."
+        ..., "-i", "--interval", help="Interval in seconds between generating batches."
     ),
     count: int = typer.Option(
         ...,
@@ -76,7 +76,7 @@ def serve(
         "--version",
         help="Version of the FastAPI application",
     ),
-    schema_paths: list[Path] = typer.Option(
+    schema_paths: list[str] = typer.Option(
         ...,
         "-s",
         "--schema",
