@@ -1,6 +1,6 @@
 [project]
 name = "mimicry"
-version = "0.2.1"
+version = "0.3.0"
 description = "Mimicry is a Python-based tool designed for generating and streaming synthetic data."
 readme = "README.md"
 authors = [
@@ -8,9 +8,11 @@ authors = [
 ]
 requires-python = ">=3.12"
 dependencies = [
+    "boto3>=1.38.42",
     "connectorx>=0.4.3",
     "duckdb>=1.2.2",
     "fastapi>=0.115.12",
+    "google-cloud-storage>=3.1.1",
     "httpx>=0.28.1",
     "kafka-python>=2.2.11",
     "mimesis>=18.0.0",
