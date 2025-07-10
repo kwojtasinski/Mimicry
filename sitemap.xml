@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <url>
+         <loc>https://kwojtasinski.github.io/Mimicry/</loc>
+         <lastmod>2025-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://kwojtasinski.github.io/Mimicry/CHANGELOG/</loc>
+         <lastmod>2025-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://kwojtasinski.github.io/Mimicry/cli/</loc>
+         <lastmod>2025-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://kwojtasinski.github.io/Mimicry/configuration/</loc>
+         <lastmod>2025-07-10</lastmod>
+    </url>
+    <url>
+         <loc>https://kwojtasinski.github.io/Mimicry/sinks/</loc>
+         <lastmod>2025-07-10</lastmod>
+    </url>
+</urlset>
