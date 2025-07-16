@@ -1,4 +1,4 @@
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field, field_validator
 
@@ -7,8 +7,8 @@ class FieldConfiguration(BaseModel):
     name: str
     description: str
     mimesis_field_name: str
-    mimesis_field_args: list[str | int | float | bool] = Field(default_factory=list)
-    mimesis_field_kwargs: dict[str, str | int | float | bool | list[str]] = Field(
+    mimesis_field_args: list[Any] = Field(default_factory=list)
+    mimesis_field_kwargs: dict[str, Any] = Field(
         default_factory=dict,
     )
 

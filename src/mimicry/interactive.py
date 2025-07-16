@@ -6,7 +6,6 @@ from typing import Any, Dict, List, Optional, Tuple
 
 import questionary
 import yaml
-from mimesis import Locale
 from mimesis.providers import BaseProvider
 
 from mimicry.models import FieldConfiguration, TableConfiguration
@@ -28,6 +27,96 @@ def _is_valid_float(value: str) -> bool:
         return True
     except ValueError:
         return False
+
+
+def _prompt_for_list_value(key: str) -> List[Any]:
+    """Prompt user to enter a list value.
+    
+    Args:
+        key: The parameter name for display.
+        
+    Returns:
+        List[Any]: The entered list value.
+    """
+    questionary.print(f"Entering list values for '{key}' (empty value to finish):")
+    
+    items = []
+    while True:
+        item_type = questionary.select(
+            "Select item type:",
+            choices=["string", "integer", "float", "boolean", "finish"]
+        ).ask()
+        
+        if item_type == "finish":
+            break
+        
+        if item_type == "string":
+            item = questionary.text("Enter string item:").ask()
+        elif item_type == "integer":
+            item_str = questionary.text(
+                "Enter integer item:",
+                validate=lambda x: x.lstrip('-').isdigit() or "Must be a valid integer"
+            ).ask()
+            item = int(item_str)
+        elif item_type == "float":
+            item_str = questionary.text(
+                "Enter float item:",
+                validate=lambda x: _is_valid_float(x) or "Must be a valid float"
+            ).ask()
+            item = float(item_str)
+        elif item_type == "boolean":
+            item = questionary.confirm("Enter boolean item:").ask()
+        
+        items.append(item)
+        questionary.print(f"Current list: {items}")
+    
+    return items
+
+
+def _prompt_for_dict_value(key: str) -> Dict[str, Any]:
+    """Prompt user to enter a dictionary value.
+    
+    Args:
+        key: The parameter name for display.
+        
+    Returns:
+        Dict[str, Any]: The entered dictionary value.
+    """
+    questionary.print(f"Entering dictionary values for '{key}':")
+    
+    result = {}
+    while True:
+        if not questionary.confirm("Add a key-value pair?").ask():
+            break
+        
+        dict_key = questionary.text("Enter key:").ask()
+        
+        value_type = questionary.select(
+            "Select value type:",
+            choices=["string", "integer", "float", "boolean"]
+        ).ask()
+        
+        if value_type == "string":
+            value = questionary.text(f"Enter string value for '{dict_key}':").ask()
+        elif value_type == "integer":
+            value_str = questionary.text(
+                f"Enter integer value for '{dict_key}':",
+                validate=lambda x: x.lstrip('-').isdigit() or "Must be a valid integer"
+            ).ask()
+            value = int(value_str)
+        elif value_type == "float":
+            value_str = questionary.text(
+                f"Enter float value for '{dict_key}':",
+                validate=lambda x: _is_valid_float(x) or "Must be a valid float"
+            ).ask()
+            value = float(value_str)
+        elif value_type == "boolean":
+            value = questionary.confirm(f"Enter boolean value for '{dict_key}':").ask()
+        
+        result[dict_key] = value
+        questionary.print(f"Current dict: {result}")
+    
+    return result
 
 
 def get_mimesis_providers() -> Dict[str, type]:
@@ -64,7 +153,7 @@ def get_provider_methods(provider_class: type) -> List[str]:
     for name in dir(provider_class):
         if not name.startswith('_'):
             attr = getattr(provider_class, name)
-            if callable(attr) and not name in ['reseed', 'seed']:
+            if callable(attr) and name not in ['reseed', 'seed']:
                 methods.append(name)
     
     return sorted(methods)
@@ -220,7 +309,7 @@ def prompt_for_field_configuration(provider_name: str, method_name: str, provide
                 key = questionary.text("Enter argument name:").ask()
                 value_type = questionary.select(
                     "Select argument type:",
-                    choices=["string", "integer", "float", "boolean"]
+                    choices=["string", "integer", "float", "boolean", "list", "dict"]
                 ).ask()
                 
                 if value_type == "string":
@@ -239,6 +328,10 @@ def prompt_for_field_configuration(provider_name: str, method_name: str, provide
                     value = float(value_str)
                 elif value_type == "boolean":
                     value = questionary.confirm(f"Enter boolean value for {key}:").ask()
+                elif value_type == "list":
+                    value = _prompt_for_list_value(key)
+                elif value_type == "dict":
+                    value = _prompt_for_dict_value(key)
                 
                 mimesis_field_kwargs[key] = value
     
