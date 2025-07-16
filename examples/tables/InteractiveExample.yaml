@@ -1,0 +1,48 @@
+name: user_profiles
+description: User profile information generated interactively
+locale: en
+fields:
+- name: user_id
+  description: Unique identifier for the user
+  mimesis_field_name: cryptographic.uuid
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: username
+  description: Unique username chosen by the user
+  mimesis_field_name: person.username
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: email
+  description: User's email address
+  mimesis_field_name: person.email
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: full_name
+  description: Full name of the user
+  mimesis_field_name: person.full_name
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: birth_date
+  description: Date of birth of the user
+  mimesis_field_name: datetime.date
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    start: 1950
+    end: 2005
+- name: phone_number
+  description: User's phone number
+  mimesis_field_name: person.telephone
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: city
+  description: City where the user resides
+  mimesis_field_name: address.city
+  mimesis_field_args: []
+  mimesis_field_kwargs: {}
+- name: registration_date
+  description: Date and time when the user registered
+  mimesis_field_name: datetime.datetime
+  mimesis_field_args: []
+  mimesis_field_kwargs:
+    start: 2020
+    end: 2024

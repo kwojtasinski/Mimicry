@@ -17,3 +17,7 @@ wheels/
 .env/
 .vscode/
 .env
+
+# temporary test files
+test_*.py
+demo_*.py
