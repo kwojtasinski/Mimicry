@@ -17,6 +17,7 @@ The primary purpose of Mimicry is to provide developers and data engineers with 
 ## Features
 
 * **Schema-based Data Generation**: Define the structure and type of your data using simple YAML configuration files. See [Configuration](configuration.md).
+* **Interactive Table Definition**: Create table schemas interactively using the CLI with the `mimicry define` command. See [Interactive Guide](docs/interactive.md).
 * **Rich Data Types**: Leverages the mimesis library for a wide variety of data field types (names, addresses, numbers, dates, custom patterns, etc.).
 * **Multiple Sinks**: Stream generated data to different storage solutions. See [Supported Sinks](docs/sinks.md).
   * Delta Lake: For robust, transactional data lake storage.
@@ -29,4 +30,14 @@ The primary purpose of Mimicry is to provide developers and data engineers with 
 
 ## Getting Started
 
-Navigate through the documentation using the menu to learn more about [Configuration](docs/configuration.md), [Supported Sinks](docs/sinks.md), and the [Command-Line Interface (docs/cli)](docs/cli.md).
+Navigate through the documentation using the menu to learn more about [Configuration](docs/configuration.md), [Supported Sinks](docs/sinks.md), the [Command-Line Interface (docs/cli)](docs/cli.md), and the new [Interactive Table Definition](docs/interactive.md) feature.
+
+### Quick Start with Interactive Mode
+
+```bash
+# Create a table definition interactively
+mimicry define -o my_table.yaml
+
+# Generate data using your interactive configuration
+mimicry generate -s sink_config.yaml -p my_table.yaml -i 5 -c 100 -b 1
+```
