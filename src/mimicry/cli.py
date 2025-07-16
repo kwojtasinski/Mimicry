@@ -4,6 +4,7 @@ import typer
 
 from mimicry.core import load_sink_config, load_table_config
 from mimicry.data import stream_data
+from mimicry.interactive import interactive_table_definition, save_table_configuration
 from mimicry.server import build_fastapi_app
 
 
@@ -115,6 +116,47 @@ def serve(
     )
 
     uvicorn.run(app, host=host, port=port)
+
+
+@app.command()
+def define(
+    output: str = typer.Option(
+        None,
+        "-o",
+        "--output",
+        help="Output path for the table configuration file. If not provided, uses table name.",
+    ),
+) -> None:
+    """
+    Interactively define a table configuration using mimesis providers.
+    This command will guide you through selecting providers, methods, and configuring fields
+    to create a complete table definition.
+    """
+    try:
+        # Run interactive table definition
+        table_config = interactive_table_definition()
+        
+        # Save the configuration
+        output_path = save_table_configuration(table_config, output)
+        
+        typer.echo(f"✅ Table configuration saved to: {output_path}")
+        typer.echo(f"📊 Table '{table_config.name}' with {len(table_config.fields)} fields")
+        
+        # Show a preview of the configuration
+        typer.echo("\n📋 Configuration preview:")
+        typer.echo(f"Name: {table_config.name}")
+        typer.echo(f"Description: {table_config.description}")
+        typer.echo(f"Locale: {table_config.locale}")
+        typer.echo(f"Fields:")
+        for field in table_config.fields:
+            typer.echo(f"  - {field.name}: {field.mimesis_field_name}")
+            
+    except KeyboardInterrupt:
+        typer.echo("\n❌ Operation cancelled by user")
+        raise typer.Exit(1)
+    except Exception as e:
+        typer.echo(f"❌ Error: {e}")
+        raise typer.Exit(1)
 
 
 if __name__ == "__main__":
