@@ -1,7 +1,8 @@
 FROM python:3.12-slim
 LABEL maintainer="Kacper Wojtasinski <k0wojtasinski@gmail.com>"
+
 # Install uv
-COPY --from=ghcr.io/astral-sh/uv:0.7 /uv /uvx /bin/
+COPY --from=ghcr.io/astral-sh/uv:0.8.0 /uv /uvx /bin/
 
 # Change the working directory to the `app` directory
 WORKDIR /app
@@ -13,8 +14,12 @@ RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked --no-install-project
 
 # Copy the project into the image
-ADD . /app
+COPY . /app
 
 # Sync the project
 RUN --mount=type=cache,target=/root/.cache/uv \
     uv sync --locked
+
+EXPOSE 8000
+
+CMD ["uv", "run", "uvicorn", "mimicry.server:app", "--host", "0.0.0.0", "--port", "8000"]

@@ -1,4 +1,5 @@
 import pathlib
+import shutil
 from typing import Iterator
 import requests
 
@@ -19,6 +20,19 @@ from mimicry.models import (
 )
 
 STATIC_PATH = pathlib.Path(__file__).parent / "static"
+
+
+def pytest_collection_modifyitems(config: pytest.Config, items: list[pytest.Item]) -> None:
+    """Skip integration tests when Docker is unavailable in the current environment."""
+    if shutil.which("docker"):
+        return
+
+    skip_integration = pytest.mark.skip(
+        reason="Docker CLI is not available; integration tests are skipped."
+    )
+    for item in items:
+        if "integration" in item.keywords:
+            item.add_marker(skip_integration)
 
 
 def is_kafka_responsive(docker_ip, kafka_port):
